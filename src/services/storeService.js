@@ -16,7 +16,7 @@ export const storeService = {
 
     try {
       const { data } = await axios.get(
-        `https://store.api.anjay.fun/api/growtopia?apikey=${API_KEY}&discordID=223&world=${worldName}`
+        `https://store.api.anjay.fun/api/growtopia?apikey=growscankenanjay&discordID=223&world=${worldName}`
       );
       return data;
     } catch (error) {
