@@ -13,6 +13,7 @@ export const storeService = {
 
   scanWorld: async (worldName) => {
     if (!worldName) return null;
+    if (worldName === "2millionseed") throw new Error("Peganggu");
 
     try {
       const { data } = await axios.get(
