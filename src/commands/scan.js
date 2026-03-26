@@ -44,11 +44,11 @@ export default {
 
 🌍 World: **${world}**
 
-🔎 Mohon tunggu sebentar ya...
+<a:1000768724548206622:1482437232961781954> Mohon tunggu sebentar ya...
 
 ━━━━━━━━━━━━━━━
 🛒 Mau belanja kebutuhan Growtopia murah dan mudah?
-👉 https://anjay.fun
+<a:1461627126070378497:1482437222547456091> https://anjay.fun
 ━━━━━━━━━━━━━━━`,
     );
 
