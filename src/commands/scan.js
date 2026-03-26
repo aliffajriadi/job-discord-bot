@@ -29,7 +29,7 @@ export default {
     if (!worldName) return message.reply("Silakan masukkan nama world! Contoh: `!scan ZPZ` 🔍");
 
     const world = worldName.toUpperCase();
-    const loadingMsg = await message.reply(`📡 Sedang melakukan scanning pada world **${world}**...`);
+    const loadingMsg = await message.reply(`<a:1462769060759470182:1486725555553308883> Sedang melakukan scanning pada world **${world}**...`);
 
     // --- HELPER: GET EMOJI ---
     const getEmoji = (itemName) => {
