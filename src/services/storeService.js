@@ -13,11 +13,16 @@ export const storeService = {
 
   scanWorld: async (worldName) => {
     if (!worldName) return null;
-    if (worldName === "2millionseed") throw new Error("Peganggu");
+
+    const blockedWorlds = ["2millionseed", "testworld"];
+
+    if (blockedWorlds.includes(worldName.toLowerCase())) {
+      throw new Error("World ini diblokir");
+    }
 
     try {
       const { data } = await axios.get(
-        `https://store.api.anjay.fun/api/growtopia?apikey=growscankenanjay&discordID=223&world=${worldName}`
+        `https://store.api.anjay.fun/api/growtopia?apikey=growscankenanjay&discordID=223&world=${worldName}`,
       );
       return data;
     } catch (error) {
