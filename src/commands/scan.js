@@ -142,7 +142,7 @@ export default {
 
     } catch (error) {
       console.error("Error scan:", error);
-      loadingMsg.edit(`Tidak dapat melakukan Scan \nSilahkan cek <@1482344651091349626> untuk melihat status bot growscan`);
+      loadingMsg.edit(`Tidak dapat melakukan Scan \nSilahkan cek <#1482344651091349626> untuk melihat status bot growscan`);
     }
   },
 };
