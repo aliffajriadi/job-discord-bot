@@ -11,4 +11,9 @@ node_modules
 !.yarn/releases
 !.yarn/versions
 
+# Database
+/data/*.db
+/data/*.db-journal
+/data/*.db-wal
+
 .env
