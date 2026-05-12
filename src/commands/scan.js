@@ -40,8 +40,11 @@ export default {
 <a:1000768724548206622:1482437232961781954> Mohon tunggu sebentar ya...
 
 ━━━━━━━━━━━━━━━
-🛒 Mau belanja kebutuhan Growtopia murah dan mudah?
-<a:1461627126070378497:1482437222547456091> https://anjay.fun
+🛒 belanja kebutuhan Growtopia murah dan mudah?
+<a:1461627126070378497:1482437222547456091> https://discord.com/channels/1154264544441536532/1492177670622941325
+
+🛒 Pengen Punya Auto Store Discord yang Suport QRIS harga terjangkau ? 
+<a:1461627126070378497:1482437222547456091> https://discord.com/channels/1154264544441536532/1501616495367815269
 ━━━━━━━━━━━━━━━`,
     );
 
@@ -136,7 +139,7 @@ export default {
             { name: "**FLOATING**\n\n", value: droppedList },
           )
           .setFooter({
-            text: ` https://anjay.fun • Hal ${page}/${totalPages}${searchQuery ? ` • 🔍 "${searchQuery}"` : ""}`,
+            text: ` anjaystore • Hal ${page}/${totalPages}${searchQuery ? ` • 🔍 "${searchQuery}"` : ""}`,
           })
           .setTimestamp();
       };
@@ -269,7 +272,8 @@ export default {
     } catch (error) {
       console.error("Error scan:", error);
       await loadingMsg.edit(
-        `Tidak dapat melakukan Scan \nSilahkan cek <#1482344651091349626> untuk melihat status bot growscan`,
+        `Tidak dapat melakukan Scan
+        seperti nya bot sedang offline / world level terlalu tinggi!`,
       );
     } finally {
       await scanQueue.done();
