@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API_KEY = process.env.API_KEY;
-console.log(API_KEY);
+console.log(`API KEY: ${API_KEY}`);
+const BASE_URL = process.env.BASE_URL;
+console.log(`BASE URL: ${BASE_URL}`);
+
 export const storeService = {
   getStatus: async () => {
     return "Sistem Anjay Store saat ini sedang **Online**! ⚡";
@@ -21,9 +24,7 @@ export const storeService = {
     }
 
     try {
-      const { data } = await axios.get(
-        `https://store.api.anjay.fun/api/growtopia?apikey=growscankenanjay&discordID=223&world=${worldName}`,
-      );
+      const { data } = await axios.get(`${BASE_URL}/scan?world=${worldName}&apikey=${API_KEY}`);
       return data;
     } catch (error) {
       console.error("Scan Error:", error.message);
