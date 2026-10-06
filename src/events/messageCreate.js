@@ -1,5 +1,6 @@
 import { Events } from "discord.js";
 import { config } from "../config/config.js";
+import { accessService } from "../services/accessService.js";
 
 export default {
   name: Events.MessageCreate,
@@ -16,6 +17,10 @@ export default {
     if (!client.commands.has(commandName)) return;
 
     const command = client.commands.get(commandName);
+
+    if (!config.OWNER_IDS.includes(message.author.id) && !accessService.allows(message.member)) {
+      return message.reply("❌ Kamu belum memiliki role yang diizinkan untuk menggunakan bot ini.");
+    }
 
     try {
       await command.execute(message, args);

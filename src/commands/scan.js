@@ -27,26 +27,18 @@ export default {
     const world = worldName.toUpperCase();
 
     // ─── ANTRIAN ─────────────────────────────────────────────────────────────
+    let loadingMsg;
+    try {
+      loadingMsg = await message.author.send(
+        `<a:1462769060759470182:1486725555553308883> **Sedang melakukan scanning...**\n\n🌍 World: **${world}**\n\nMohon tunggu sebentar ya...`,
+      );
+    } catch {
+      return message.reply("❌ Saya tidak bisa mengirim DM. Aktifkan DM dari anggota server ini lalu coba lagi.");
+    }
     if (!scanQueue.tryStart()) {
       await scanQueue.enqueue(world, message);
     }
     // ─────────────────────────────────────────────────────────────────────────
-
-    const loadingMsg = await message.reply(
-      `<a:1462769060759470182:1486725555553308883> **Sedang melakukan scanning...**
-
-🌍 World: **${world}**
-
-<a:1000768724548206622:1482437232961781954> Mohon tunggu sebentar ya...
-
-━━━━━━━━━━━━━━━
-🛒 belanja kebutuhan Growtopia murah dan mudah?
-<a:1461627126070378497:1482437222547456091> https://discord.com/channels/1154264544441536532/1492177670622941325
-
-🛒 Pengen Punya Auto Store Discord yang Suport QRIS harga terjangkau ? 
-<a:1461627126070378497:1482437222547456091> https://discord.com/channels/1154264544441536532/1501616495367815269
-━━━━━━━━━━━━━━━`,
-    );
 
     // --- HELPER: GET EMOJI ---
     const getEmoji = (itemName) => {

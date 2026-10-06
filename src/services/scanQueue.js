@@ -64,7 +64,7 @@ class ScanQueue {
   /** Kirim / update pesan notif antrian */
   async _sendQueueNotice(entry, position) {
     try {
-      entry.statusMsg = await entry.message.reply(
+      entry.statusMsg = await entry.message.author.send(
         this._buildQueueText(entry.world, position, this._queue.length)
       );
     } catch {
