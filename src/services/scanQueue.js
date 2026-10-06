@@ -64,9 +64,10 @@ class ScanQueue {
   /** Kirim / update pesan notif antrian */
   async _sendQueueNotice(entry, position) {
     try {
-      entry.statusMsg = await entry.message.author.send(
-        this._buildQueueText(entry.world, position, this._queue.length)
-      );
+      const text = this._buildQueueText(entry.world, position, this._queue.length);
+      entry.statusMsg = entry.message.interaction
+        ? await entry.message.interaction.editReply({ content: text, embeds: [], components: [] })
+        : await entry.message.author.send(text);
     } catch {
       // Ignore kalau gagal kirim (misal channel deleted)
     }
@@ -98,9 +99,9 @@ class ScanQueue {
       const pos   = i + 1;
       if (!entry.statusMsg) continue;
       try {
-        await entry.statusMsg.edit(
-          this._buildQueueText(entry.world, pos, this._queue.length)
-        );
+        const text = this._buildQueueText(entry.world, pos, this._queue.length);
+        if (entry.message.interaction) await entry.message.interaction.editReply({ content: text });
+        else await entry.statusMsg.edit(text);
       } catch {
         // Abaikan kalau pesan sudah terhapus
       }
@@ -121,7 +122,9 @@ class ScanQueue {
     await this._refreshQueueMessages();
 
     // Hapus pesan antrian lama milik entry yang sekarang diproses
-    if (entry.statusMsg) {
+    if (entry.message.interaction) {
+      try { await entry.message.interaction.editReply({ content: `✅ Giliran scan **${entry.world}** dimulai...`, embeds: [], components: [] }); } catch { /* ignore */ }
+    } else if (entry.statusMsg) {
       try { await entry.statusMsg.delete(); } catch { /* ignore */ }
     }
 

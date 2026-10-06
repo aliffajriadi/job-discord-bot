@@ -17,26 +17,33 @@ export default {
   description:
     "Scan world dengan Sorting (Terbanyak di atas), Emoji DB & Antrian Otomatis",
 
-  async execute(message, args) {
-    const worldName = args[0];
-    if (!worldName)
-      return message.reply(
-        "Silakan masukkan nama world! Contoh: `!scan ZPZ` 🔍",
-      );
+  async execute(message, args = []) {
+    const isInteraction = typeof message.isChatInputCommand === "function";
+    const user = isInteraction ? message.user : message.author;
+    const worldName = isInteraction ? message.options.getString("world") : args[0];
+    if (!worldName) {
+      const text = "Silakan masukkan nama world! Contoh: `/scan world:ZPZ` 🔍";
+      return isInteraction ? message.reply({ content: text, ephemeral: true }) : message.reply(text);
+    }
 
     const world = worldName.toUpperCase();
 
     // ─── ANTRIAN ─────────────────────────────────────────────────────────────
     let loadingMsg;
-    try {
-      loadingMsg = await message.author.send(
-        `<a:1462769060759470182:1486725555553308883> **Sedang melakukan scanning...**\n\n🌍 World: **${world}**\n\nMohon tunggu sebentar ya...`,
-      );
-    } catch {
-      return message.reply("❌ Saya tidak bisa mengirim DM. Aktifkan DM dari anggota server ini lalu coba lagi.");
+    const loadingText = `<a:1462769060759470182:1486725555553308883> **Sedang melakukan scanning...**\n\n🌍 World: **${world}**\n\nMohon tunggu sebentar ya...`;
+    if (isInteraction) {
+      await message.deferReply({ ephemeral: true });
+      loadingMsg = await message.editReply({ content: loadingText });
+    } else {
+      loadingMsg = await message.reply(loadingText);
     }
     if (!scanQueue.tryStart()) {
-      await scanQueue.enqueue(world, message);
+      if (isInteraction) {
+        await scanQueue.enqueue(world, { interaction: message, author: user });
+        loadingMsg = await message.fetchReply();
+      } else {
+        await scanQueue.enqueue(world, message);
+      }
     }
     // ─────────────────────────────────────────────────────────────────────────
 
@@ -185,7 +192,7 @@ export default {
 
       collector.on("collect", async (interaction) => {
         // Cek kepemilikan
-        if (interaction.user.id !== message.author.id) {
+        if (interaction.user.id !== user.id) {
           return interaction.reply({
             content: "Kamu tidak punya akses ke tombol ini!",
             ephemeral: true,
@@ -214,7 +221,7 @@ export default {
             const submitted = await interaction.awaitModalSubmit({
               filter: (i) =>
                 i.customId === "search_modal" &&
-                i.user.id === message.author.id,
+                i.user.id === user.id,
               time: 60000,
             });
 

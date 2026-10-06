@@ -18,6 +18,11 @@ export default {
 
     const command = client.commands.get(commandName);
 
+    // Prefix command tidak dapat membalas secara ephemeral di Discord.
+    if (commandName === "scan") {
+      return message.reply("🔒 Untuk hasil yang hanya terlihat oleh kamu, gunakan slash command `/scan`.");
+    }
+
     if (!config.OWNER_IDS.includes(message.author.id) && !accessService.allows(message.member)) {
       return message.reply("❌ Kamu belum memiliki role yang diizinkan untuk menggunakan bot ini.");
     }

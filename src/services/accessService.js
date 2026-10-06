@@ -25,7 +25,9 @@ const persist = () => {
 export const accessService = {
   getAllowedRoles: () => [...allowedRoles],
   allows(member) {
-    return allowedRoles.length === 0 || allowedRoles.some((id) => member?.roles?.cache?.has(id));
+    return allowedRoles.length === 0 || allowedRoles.some((id) =>
+      member?.roles?.cache?.has(id) || member?.roles?.includes?.(id),
+    );
   },
   addRole(id) {
     if (allowedRoles.includes(id)) return false;
